@@ -1,0 +1,226 @@
+
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("Консольный файловый проводник");
+            Console.WriteLine("1. Просмотр доступных дисков");
+            Console.WriteLine("2. Выход");
+
+            var choice = Console.ReadLine();
+            if (choice == "1")
+            {
+                ShowDrives();
+            }
+            else if (choice == "2")
+            {
+                break;
+            }
+        }
+    }
+
+    static void ShowDrives()
+    {
+        DriveInfo[] drives = DriveInfo.GetDrives();
+        Console.WriteLine("Доступные диски:");
+
+        for (int i = 0; i < drives.Length; i++)
+        {
+            Console.WriteLine($"{i + 1}. {drives[i].Name} - {drives[i].DriveType}");
+        }
+
+        Console.Write("Выберите диск для работы (или 0 для выхода): ");
+        int driveChoice = int.Parse(Console.ReadLine());
+
+        if (driveChoice > 0 && driveChoice <= drives.Length)
+        {
+            ManageDrive(drives[driveChoice - 1]);
+        }
+    }
+
+    static void ManageDrive(DriveInfo drive)
+    {
+        string currentPath = drive.Name;
+
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine($"Текущий каталог: {currentPath}");
+            ShowDirectoryContents(currentPath);
+
+            Console.WriteLine("\nВыберите действие:");
+            Console.WriteLine("1. Перейти в подкаталог");
+            Console.WriteLine("2. Вернуться в родительский каталог");
+            Console.WriteLine("3. Создать новый каталог");
+            Console.WriteLine("4. Создать новый текстовый файл");
+            Console.WriteLine("5. Удалить файл или каталог");
+            Console.WriteLine("6. Информация о диске");
+            Console.WriteLine("7. Выход");
+
+            var choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    currentPath = ChangeDirectory(currentPath);
+                    break;
+                case "2":
+                    currentPath = Directory.GetParent(currentPath)?.FullName ?? currentPath;
+                    break;
+                case "3":
+                    CreateDirectory(currentPath);
+                    break;
+                case "4":
+                    CreateFile(currentPath);
+                    break;
+                case "5":
+                    DeleteFileOrDirectory(currentPath);
+                    break;
+                case "6":
+                    ShowDriveInfo(drive);
+                    break;
+                case "7":
+                    return;
+                default:
+                    Console.WriteLine("Некорректный выбор. Нажмите любую клавишу для продолжения.");
+                    Console.ReadKey();
+                    break;
+            }
+        }
+    }
+
+    static void ShowDirectoryContents(string path)
+    {
+        var directories = Directory.GetDirectories(path);
+        var files = Directory.GetFiles(path);
+
+        Console.WriteLine("Подкаталоги:");
+        foreach (var dir in directories)
+        {
+            Console.WriteLine($"[DIR] {Path.GetFileName(dir)}");
+        }
+
+        Console.WriteLine("\nФайлы:");
+        foreach (var file in files)
+        {
+            Console.WriteLine($"[FILE] {Path.GetFileName(file)}");
+        }
+    }
+
+    static string ChangeDirectory(string currentPath)
+    {
+        Console.Write("Введите имя подкаталога: ");
+        string subDir = Console.ReadLine();
+        string newPath = Path.Combine(currentPath, subDir);
+
+        if (Directory.Exists(newPath))
+        {
+            return newPath;
+        }
+        else
+        {
+            Console.WriteLine("Подкаталог не найден. Нажмите любую клавишу для продолжения.");
+            Console.ReadKey();
+            return currentPath;
+        }
+    }
+
+    static void CreateDirectory(string path)
+    {
+        Console.Write("Введите имя нового каталога: ");
+        string dirName = Console.ReadLine();
+        string newDirPath = Path.Combine(path, dirName);
+
+        if (!Directory.Exists(newDirPath))
+        {
+            Directory.CreateDirectory(newDirPath);
+            Console.WriteLine("Каталог создан.");
+        }
+        else
+        {
+            Console.WriteLine("Каталог с таким именем уже существует.");
+        }
+        
+        Console.WriteLine("Нажмите любую клавишу для продолжения.");
+        Console.ReadKey();
+    }
+
+    static void CreateFile(string path)
+    {
+        Console.Write("Введите имя нового текстового файла: ");
+        string fileName = Console.ReadLine();
+        string filePath = Path.Combine(path, fileName);
+
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine("Введите текст для записи в файл (для завершения ввода введите 'exit'):");
+            using (StreamWriter sw = new StreamWriter(filePath))
+            {
+                string line;
+                while ((line = Console.ReadLine()) != "exit")
+                {
+                    sw.WriteLine(line);
+                }
+            }
+            Console.WriteLine("Файл создан.");
+        }
+        else
+        {
+            Console.WriteLine("Файл с таким именем уже существует.");
+        }
+
+        Console.WriteLine("Нажмите любую клавишу для продолжения.");
+        Console.ReadKey();
+    }
+
+    static void DeleteFileOrDirectory(string path)
+    {
+        Console.Write("Введите имя файла или каталога для удаления: ");
+        string nameToDelete = Console.ReadLine();
+        string fullPath = Path.Combine(path, nameToDelete);
+
+        if (Directory.Exists(fullPath))
+        {
+            Console.Write($"Вы уверены, что хотите удалить каталог '{nameToDelete}'? (y/n): ");
+            if (Console.ReadKey().KeyChar == 'y')
+            {
+                Directory.Delete(fullPath, true);
+                Console.WriteLine("\nКаталог удален.");
+            }
+        }
+        else if (File.Exists(fullPath))
+        {
+            Console.Write($"Вы уверены, что хотите удалить файл '{nameToDelete}'? (y/n): ");
+            if (Console.ReadKey().KeyChar == 'y')
+            {
+                File.Delete(fullPath);
+                Console.WriteLine("\nФайл удален.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("\nФайл или каталог не найден.");
+        }
+
+        Console.WriteLine("Нажмите любую клавишу для продолжения.");
+        Console.ReadKey();
+    }
+
+    static void ShowDriveInfo(DriveInfo drive)
+    {
+        Console.Clear();
+        Console.WriteLine($"Информация о диске {drive.Name}:");
+        Console.WriteLine($"Объем: {drive.TotalSize / (1024 * 1024 * 1024)} ГБ");
+        Console.WriteLine($"Доступно: {drive.AvailableFreeSpace / (1024 * 1024 * 1024)} ГБ");
+        Console.WriteLine($"Файловая система: {drive.DriveFormat}");
+        
+        Console.WriteLine("Нажмите любую клавишу для продолжения.");
+        Console.ReadKey();
+    }
+}
