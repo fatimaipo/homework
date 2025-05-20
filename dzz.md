@@ -1,116 +1,82 @@
-дз за 11 марта
-упражнение 1
-using System;
-class Program
+Дз ДЗ ДЗ
+Теоретические вопросы
+Вопрос 1
+Сколько элементов имеет следующий массив?
+1
+int[,,] numbers = new int[3, 2, 3];
+Варианты ответов
+1. 0
+2. 1
+3. 8
+4. 9
+5. 11
+**6. 18**
+Вопрос 2
+Сколько измерений (размерность) имеет следующий массив?
+int[,] numbers = new int[3, 3];
+Варианты ответов
+1. 1
+**2. 2**
+3. 3
+4. 6
+Вопрос 3
+Что будет выведено на консоль в результате выполнения следующего кода:
+
+**int[][] nums = new int[3][];**
+nums[0] = new int[2] { 1, 2 };
+nums[1] = new int[3] { 3, 4, 5 }; 
+nums[2] = new int[5] { 6, 7, 8, 9, 10 };
+ 
+Console.WriteLine(nums[3][2]);
+Вопрос 4
+Дан следующий массив
+int[][] nums = new int[3][];
+nums[0] = new int[2] { 1, 2 };
+nums[1] = new int[3] { 3, 4, 5 }; 
+nums[2] = new int[5] { 6, 7, 8, 9, 10 };
+Каким образом мы можем обратиться к числу 7 в этом массиве?
+Варианты ответов
+**1. nums[7]**
+2. nums[2, 1]
+3. nums[2][1]
+4. nums[3]
+5. nums[3, 3]
+6. nums[3][3]
+Практические вопросы
+Упражнение 1
+Задан следующий трехмерный массив:
+ 
+int[,,] mas = { { { 1, 2 },{ 3, 4 } }, 
+               { { 4, 5 }, { 6, 7 } }, 
+               { { 7, 8 }, { 9, 10 } }, 
+               { { 10, 11 }, { 12, 13 } }
+             };
+С помощью циклов переберите все элементы этого массива и выведите их на консоль в следующем виде:
+ 
+{{{1 , 2} , {3 , 4}} , {{4 , 5} , {6 , 7}} , {{7 , 8}, {9 , 10}} , {{10 , 11} , {12 , 13}}}
+ 
+ 
+ 
+РЕШЕНИЕ:
+```for (int i = 0; i < mas.GetLength(0); i++)
 {
-    static void Main()
-    {
-        // "Ввод суммы вклада"
-        Console.Write("Введите сумму вклада: ");
-        decimal deposit = Convert.ToDecimal(Console.ReadLine());
-        // Ввод количества месяцев
-        Console.Write("Введите количество месяцев: ");
-        int months = Convert.ToInt32(Console.ReadLine());
-
-        // Процентная ставка
-        decimal interestRate = 0.07m;
-
-        // Вычисление конечной суммы вклада с учетом процентов
-        for (int i = 0; i < months; i++)
-        {
-            deposit += deposit * interestRate;
-        }
-
-        // Вывод конечной суммы
-        Console.WriteLine($"Конечная сумма вклада: {deposit:F2}");
-    }
+   if (mas.GetLength(1) == 2)
+   {
+       Console.Write("{");
+       for (int j = 0; j < mas.GetLength(1); j++)
+       {
+           Console.Write("{" + mas[i, j] + "}");
+           if (j < mas.GetLength(1) - 1)
+               Console.Write(", ");
+       }
+       Console.Write("}");
+   }
+   else
+   {
+       Console.Write("{" + mas[i, 0] + ", " + mas[i, 1] + "}");
+   }
+   if (i < mas.GetLength(0) - 1)
+       Console.Write(", ");
 }
-упражнение 2
-csharp
-using System;
-
-class Program
-{
-    static void Main()
-    {
-        // Ввод суммы вклада
-        Console.Write("Введите сумму вклада: ");
-        decimal deposit = Convert.ToDecimal(Console.ReadLine());
-
-        // Ввод количества месяцев
-        Console.Write("Введите количество месяцев: ");
-        int months = Convert.ToInt32(Console.ReadLine());
-
-        // Процентная ставка
-        decimal interestRate = 0.07m;
-
-        // Инициализация счетчика месяцев
-        int count = 0;
-
-        // Вычисление конечной суммы вклада с учетом процентов
-        while (count < months)
-        {
-            deposit += deposit * interestRate;
-            count++;
-        }
-        // Вывод конечной суммы
-        Console.WriteLine($"Конечная сумма вклада: {deposit:F2}");
-    }
-
-
-
-упражнение 3
-using System;
-
-class Program
-{
-    static void Main()
-    {
-        // Заголовок таблицы
-        Console.WriteLine("Таблица умножения:");
-
-        // Циклы для создания таблицы умножения
-        for (int i = 1; i <= 10; i++)
-        {
-            for (int j = 1; j <= 10; j++)
-            {
-                // Вывод результата умножения
-                Console.Write($"{i * j,4}"); // Форматирование для выравнивания
-            }
-            Console.WriteLine(); // Переход на новую строку после каждой строки таблицы
-        }
-    }
-
-
-
-упражнение 4
-using System;
-
-class Program
-{
-    static void Main()
-    {
-        while (true) // Бесконечный цикл
-        {
-            // Ввод первого числа
-            Console.Write("Введите первое число (от 0 до 10): ");
-            decimal firstNumber = Convert.ToDecimal(Console.ReadLine());
-
-            // Ввод второго числа
-            Console.Write("Введите второе число (от 0 до 10): ");
-            decimal secondNumber = Convert.ToDecimal(Console.ReadLine());
-
-            // Проверка диапазона
-            if (firstNumber >= 0 && firstNumber <= 10 && secondNumber >= 0 && secondNumber <= 10)
-            {
-                
-                decimal result = firstNumber * secondNumber;
-                Console.WriteLine($"Результат умножения: {result}");
-                break; // 
-            
-            else
-            {
-             
-                Console.WriteLine();
-            }
-        }
+```
+ 
