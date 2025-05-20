@@ -1,0 +1,120 @@
+Конечно! Вот пример небольшой новеллы, вдохновленной игрой Subway Surfers, написанной на C#. Эта новелла будет представлять собой текстовую игру, где игрок будет принимать решения, чтобы продвигаться по сюжету.
+
+using System;
+
+namespace SubwaySurfersNovel
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Добро пожаловать в Subway Surfers: Приключение в городе!");
+            Console.WriteLine("Вы играете за Джейка, который убегает от инспектора и его собаки.");
+            StartAdventure();
+        }
+
+        static void StartAdventure()
+        {
+            Console.WriteLine("\nВы находитесь на платформе метро. Впереди вас ждут рельсы и множество препятствий.");
+            Console.WriteLine("Выберите действие: ");
+            Console.WriteLine("1. Бежать по рельсам.");
+            Console.WriteLine("2. Спрятаться за контейнером.");
+
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    RunOnTracks();
+                    break;
+                case "2":
+                    HideBehindContainer();
+                    break;
+                default:
+                    Console.WriteLine("Неверный выбор. Попробуйте еще раз.");
+                    StartAdventure();
+                    break;
+            }
+        }
+
+        static void RunOnTracks()
+        {
+            Console.WriteLine("\nВы начали бежать по рельсам. Вдруг вы видите поезд, который приближается!");
+            Console.WriteLine("Что вы будете делать?");
+            Console.WriteLine("1. Прыгнуть в сторону.");
+            Console.WriteLine("2. Продолжать бежать вперед.");
+
+            string choice = Console.ReadLine();
+
+            if (choice == "1")
+            {
+                Console.WriteLine("\nВы успешно прыгнули в сторону и избежали поезда! Вы продолжаете бежать.");
+                // Продолжение приключения
+                EndAdventure(true);
+            }
+            else if (choice == "2")
+            {
+                Console.WriteLine("\nВы не успели увернуться! Поезд сбил вас. Игра окончена.");
+                EndAdventure(false);
+            }
+            else
+            {
+                Console.WriteLine("Неверный выбор. Попробуйте еще раз.");
+                RunOnTracks();
+            }
+        }
+
+        static void HideBehindContainer()
+        {
+            Console.WriteLine("\nВы спрятались за контейнером. Инспектор пробегает мимо, не заметив вас.");
+            Console.WriteLine("Теперь вы можете:");
+            Console.WriteLine("1. Выйти из укрытия и продолжить бегство.");
+            Console.WriteLine("2. Оставаться скрытым.");
+
+            string choice = Console.ReadLine();
+
+            if (choice == "1")
+            {
+                Console.WriteLine("\nВы вышли из укрытия и снова начали бежать. Инспектор все еще ищет вас!");
+                // Продолжение приключения
+                EndAdventure(true);
+            }
+            else if (choice == "2")
+            {
+                Console.WriteLine("\nВы остаетесь в укрытии слишком долго. Инспектор вернулся и поймал вас. Игра окончена.");
+                EndAdventure(false);
+            }
+            else
+            {
+                Console.WriteLine("Неверный выбор. Попробуйте еще раз.");
+                HideBehindContainer();
+            }
+        }
+
+        static void EndAdventure(bool success)
+        {
+            if (success)
+            {
+                Console.WriteLine("\nПоздравляем! Вы успешно сбежали от инспектора!");
+            }
+            else
+            {
+                Console.WriteLine("\nК сожалению, вы не смогли сбежать. Попробуйте снова!");
+            }
+
+            Console.WriteLine("Хотите сыграть еще раз? (да/нет)");
+            string playAgain = Console.ReadLine().ToLower();
+
+            if (playAgain == "да")
+            {
+                StartAdventure();
+            }
+            else
+            {
+                Console.WriteLine("Спасибо за игру! До свидания!");
+            }
+        }
+    }
+}
+
+
