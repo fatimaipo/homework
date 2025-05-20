@@ -1,8 +1,10 @@
-# ОСНОВА АЛГОРИТМИЗАЦИИ И ПРОГРАММИРОВАНИЯ
+# Основа программирования и алгоритмизации
 ##  Мирзабекова Фатима ИПО23-23
+
 ### STEK Visual Code C# .Net 8.0 framework
 #### Задания дз
-[Циклы](https://github.com/fatimaipo/homework/blob/main/dz)
+## [Циклы]
+(https://github.com/fatimaipo/homework/blob/main/dz)
 _для вычисления суммы с циклом for_
 
 [Метод](https://github.com/fatimaipo/homework/blob/main/dz%208%20apr)
