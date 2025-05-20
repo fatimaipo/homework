@@ -1,0 +1,64 @@
+дз 1 апреля
+
+задача 1
+
+public static int SumOfNumbers(List<int> numbers)
+{
+    int sum = 0;
+    foreach (int num in numbers)
+    {
+        sum += num;
+    }
+    return sum;
+}
+
+
+задача 2
+public static bool IsPalindrome(string input)
+{
+    string cleanedInput = new string(input.Where(char.IsLetterOrDigit).ToArray()).ToLower();
+    int left = 0, right = cleanedInput.Length - 1;
+
+    while (left < right)
+    {
+        if (cleanedInput[left] != cleanedInput[right])
+            return false;
+        left++;
+        right--;
+    }
+
+    return true;
+}
+
+
+задача 3
+public static long Factorial(int n)
+{
+    if (n == 0 || n == 1)
+        return 1;
+    else
+        return n * Factorial(n - 1);
+}
+
+
+задача 4
+public static int FindMax(List<int> numbers)
+{
+    if (numbers.Count == 0)
+        throw new ArgumentException("Список не должен быть пустым.");
+
+    int max = numbers[0];
+    foreach (int num in numbers)
+    {
+        if (num > max)
+            max = num;
+    }
+    return max;
+}
+
+
+задача 5
+public static List<int> RemoveDuplicates(List<int> numbers)
+{
+    return numbers.Distinct().ToList();
+}
